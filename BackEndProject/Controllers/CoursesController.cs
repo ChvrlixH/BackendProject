@@ -1,12 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BackEndProject.Database;
+using BackEndProject.Models;
+using BackEndProject.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndProject.Controllers
 {
     public class CoursesController : Controller
     {
+        private readonly AppDb _appDb;
+
+        public CoursesController(AppDb appDb)
+        {
+            _appDb = appDb;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            List<Course> courses = _appDb.Courses.ToList();
+
+            CourseVM courseVM = new()
+            {
+                course = courses,
+            };
+
+            return View(courseVM);
         }
 
         public IActionResult Detail()
