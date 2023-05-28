@@ -1,0 +1,45 @@
+﻿@model Course;
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper col-11">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Courses</h4>
+                    <p class="card-description">
+                        Course Update
+                    </p>
+                    <form class="forms-sample" method="post">
+                        <div class="form-group">
+                            <label for="Image">Image</label>
+                            <input class="form-control" asp-for="Image" placeholder="Image">
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Title">Title</label>
+                            <input class="form-control" asp-for="Title" placeholder="Title">
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Description">Description</label>
+                            <input class="form-control" asp-for="Description" placeholder="Description">
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-check form-check-flat form-check-primary">
+                            <button type="submit" class="btn btn-warning mr-2">Update</button>
+                            <a class="btn btn-light" asp-action="Index">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

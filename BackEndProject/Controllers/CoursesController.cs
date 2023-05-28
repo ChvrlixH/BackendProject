@@ -1,8 +1,4 @@
-﻿using BackEndProject.Database;
-using BackEndProject.Models;
-using BackEndProject.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-
+﻿
 namespace BackEndProject.Controllers
 {
     public class CoursesController : Controller
