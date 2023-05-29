@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using BackEndProject.Areas.Admin.ViewModels;
+@model List<AllUserVM>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper col-12">
+    <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Products Table</h4>
+                    <div class="table-responsive">
+                        <table class="table">
+                            @* <a class="btn btn-primary" asp-action="Create">Create</a>*@
+                            <thead>
+                                <tr>
+                                    <th>Fullname</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model)
+                                {
+                                    <tr>
+
+                                        <td>@user.Fullname</td>
+                                        <td>@user.Username</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.Role</td>
+                                        <td>
+                                            <a class="btn btn-success" asp-action="Read" asp-route-id="@user.Id">Read</a>
+                                            <a class="btn btn-warning" asp-action="ChangeRole" asp-route-id="@user.Id">Change Role</a>
+                                            @*                                            <a class="btn btn-danger @(ViewBag.Count == 1 ? "disabled" : "")" asp-action="Delete" asp-route-id="@user.Id">Delete</a>*@
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

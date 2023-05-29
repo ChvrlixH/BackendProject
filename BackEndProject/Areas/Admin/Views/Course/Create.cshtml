@@ -1,4 +1,5 @@
-﻿@model Course
+﻿@using BackEndProject.Areas.Admin.ViewModels;
+@model CoursesVM
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -13,10 +14,10 @@
                     <p class="card-description">
                         Course Create
                     </p>
-                    <form class="forms-sample" method="post">
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="Image">Image</label>
-                            <input type="file" class="form-control" asp-for="Image" placeholder="Image">
+                            <input class="form-control" asp-for="Image" placeholder="Image">
                             <span asp-validation-for="Image" class="text-danger"></span>
                         </div>
                         <div class="form-group">

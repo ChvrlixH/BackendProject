@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using BackEndProject.Areas.Admin.ViewModels;
+@model UserVM
+@{
+    ViewData["Title"] = "ChangeRole";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper col-11">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Products</h4>
+                    <p class="card-description">
+                        Product Create
+                    </p>
+                    <form class="forms-sample" method="post">
+                        <div class="form-group">
+                            <label for="CategoryId">Categories</label>
+                            <select class="form-control" asp-for="Role">
+                                @foreach (IdentityRole role in ViewBag.Roles)
+                                {
+                                    <option value="@role.Name">@role.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-check form-check-flat form-check-primary">
+                            <button type="submit" class="btn btn-warning mr-2">Change Role</button>
+                            <a class="btn btn-light" asp-action="Index">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

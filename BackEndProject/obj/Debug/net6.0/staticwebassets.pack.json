@@ -125,6 +125,10 @@
       "PackagePath": "staticwebassets\\admin\\images\\faces\\0aabe09d-15be-4718-92da-c424e8dda231-face9.jpg"
     },
     {
+      "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\images\\faces\\14fef59b-5418-456d-b5c3-d6ea9fcdc902-dark-demon-witch-fantasy-8k-wallpaper-1024x576.jpg",
+      "PackagePath": "staticwebassets\\admin\\images\\faces\\14fef59b-5418-456d-b5c3-d6ea9fcdc902-dark-demon-witch-fantasy-8k-wallpaper-1024x576.jpg"
+    },
+    {
       "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\images\\faces\\CEO.jpg",
       "PackagePath": "staticwebassets\\admin\\images\\faces\\CEO.jpg"
     },
@@ -151,6 +155,10 @@
     {
       "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\images\\faces\\e006e253-5a71-4ed8-b54a-53085b62b4fb-face4.jpg",
       "PackagePath": "staticwebassets\\admin\\images\\faces\\e006e253-5a71-4ed8-b54a-53085b62b4fb-face4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\images\\faces\\ea7f37fb-9f19-4389-93ac-04609902a00d-AyxanMAXE 3x4 ters.jpg",
+      "PackagePath": "staticwebassets\\admin\\images\\faces\\ea7f37fb-9f19-4389-93ac-04609902a00d-AyxanMAXE 3x4 ters.jpg"
     },
     {
       "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\images\\faces\\face1.jpg",
@@ -399,6 +407,34 @@
     {
       "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\pages\\ui-features\\typography.html",
       "PackagePath": "staticwebassets\\admin\\pages\\ui-features\\typography.html"
+    },
+    {
+      "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\templates\\images\\azmood2.jpeg",
+      "PackagePath": "staticwebassets\\admin\\templates\\images\\azmood2.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\templates\\images\\image-1.png",
+      "PackagePath": "staticwebassets\\admin\\templates\\images\\image-1.png"
+    },
+    {
+      "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\templates\\images\\image-2.png",
+      "PackagePath": "staticwebassets\\admin\\templates\\images\\image-2.png"
+    },
+    {
+      "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\templates\\images\\image-3.png",
+      "PackagePath": "staticwebassets\\admin\\templates\\images\\image-3.png"
+    },
+    {
+      "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\templates\\images\\image-4.png",
+      "PackagePath": "staticwebassets\\admin\\templates\\images\\image-4.png"
+    },
+    {
+      "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\templates\\images\\image-5.png",
+      "PackagePath": "staticwebassets\\admin\\templates\\images\\image-5.png"
+    },
+    {
+      "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\templates\\images\\template.html",
+      "PackagePath": "staticwebassets\\admin\\templates\\images\\template.html"
     },
     {
       "Id": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\vendors\\.DS_Store",

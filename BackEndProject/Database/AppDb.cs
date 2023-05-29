@@ -1,9 +1,10 @@
 ﻿using BackEndProject.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackEndProject.Database;
 
-public class AppDb : DbContext
+public class AppDb : IdentityDbContext<AppUser>
 {
 	public AppDb(DbContextOptions<AppDb> options) : base(options) { }
 
