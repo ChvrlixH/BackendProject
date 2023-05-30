@@ -1,0 +1,47 @@
+﻿@model BlogVM;
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <!-- Banner Area Start -->
+        <div class="banner-area-wrapper">
+            <div class="banner-area text-center">	
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="banner-content-wrapper">
+                                <div class="banner-content">
+                                    <h2>blog details</h2> 
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        <!-- Banner Area End -->
+        <!-- Blog Start -->
+        <div class="blog-details-area pt-150 pb-140">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-11">
+                        @foreach(var blogItem in Model.blog)
+                        {
+                        <div class="blog-details">
+                            <div class="blog-details-img">
+                            <img src="~/admin/images/faces/@blogItem.Image" alt="blog-details">
+                            </div>
+                            <div class="blog-details-content">
+                            <h2>@blogItem.Title </h2>
+                            <h6>@blogItem.Name  /  @blogItem.Date  /  <i class="fa fa-comments-o"></i> @blogItem.Comment</h6>
+                              @blogItem.Description
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Blog End -->
+

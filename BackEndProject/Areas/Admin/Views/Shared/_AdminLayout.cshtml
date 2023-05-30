@@ -180,9 +180,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Info" asp-action="Index">
+                        <a class="nav-link" asp-controller="Blogs" asp-action="Index">
                             <i class="mdi mdi-chart-pie menu-icon"></i>
-                            <span class="menu-title">Info</span>
+                            <span class="menu-title">Blogs</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -235,6 +235,11 @@
                 <!-- End custom js for this page-->
 
             </div>
+
+            <script src="~/ckeditor/ckeditor.js"></script>
+            <link href="/path/to/ckeditor/skins/moono/editor.css" rel="stylesheet">
+
+     @RenderSection("Scripts", required: false)
 </body>
 
 </html>

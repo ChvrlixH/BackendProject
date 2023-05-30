@@ -10,5 +10,5 @@ public class AppDb : IdentityDbContext<AppUser>
 
 	public DbSet<CourseInfo> CoursesInfo { get; set; } = null!;
 	public DbSet<Course> Courses { get; set; } = null!;
-
+	public DbSet<Blog> Blogs { get; set; } = null!;
 }
