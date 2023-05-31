@@ -1,0 +1,97 @@
+﻿@using BackEndProject.Areas.Admin.ViewModels;
+@model TeacherVM;
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper col-11">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Products</h4>
+                    <p class="card-description">
+                        Product Create
+                    </p>
+                    <form class="forms-sample" method="post" >
+                        <div class="form-group">
+                            <label for="Image">Image</label>
+                            <input type="file" class="form-control" asp-for="Image" placeholder="Image">
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Name">Name</label>
+                            <input class="form-control" asp-for="Name" placeholder="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Profession">Profession</label>
+                            <input class="form-control" asp-for="Profession" placeholder="Profession">
+                            <span asp-validation-for="Profession" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Description">Description</label>
+                            <input class="form-control" asp-for="Description" placeholder="Description">
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Degree">Degree</label>
+                            <input class="form-control" asp-for="Degree" placeholder="Degree">
+                            <span asp-validation-for="Degree" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Experience">Experience</label>
+                            <input class="form-control" asp-for="Experience" placeholder="Experience">
+                            <span asp-validation-for="Experience" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Hobbies">Hobbies</label>
+                            <input class="form-control" asp-for="Hobbies" placeholder="Hobbies">
+                            <span asp-validation-for="Hobbies" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Faculty">Faculty</label>
+                            <input class="form-control" asp-for="Faculty" placeholder="Faculty">
+                            <span asp-validation-for="Faculty" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Mail">Mail</label>
+                            <input class="form-control" asp-for="Mail" placeholder="Mail">
+                            <span asp-validation-for="Mail" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Number">Number</label>
+                            <input class="form-control" asp-for="Number" placeholder="Number">
+                            <span asp-validation-for="Number" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="SkillId">Skills</label>
+                            <select class="form-control" asp-for="SkillId">
+                                @foreach (Skill skill in ViewBag.Skills)
+                                {
+                                    <option value="@skill.Id">@skill.Name</option>
+                                    <option value="@skill.Id">@skill.Rate</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="SocialMediaId">Social Media</label>
+                            <select class="form-control" asp-for="SocialMediaId">
+                                @foreach (SocialMedia socialMedia in ViewBag.SocialMedias)
+                                {
+                                    <option value="@socialMedia.Id">@socialMedia.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-check form-check-flat form-check-primary">
+                            <button type="submit" class="btn btn-warning mr-2">Update</button>
+                            <a class="btn btn-light" asp-action="Index">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

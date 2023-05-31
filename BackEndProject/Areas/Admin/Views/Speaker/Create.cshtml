@@ -1,0 +1,69 @@
+﻿@model Speaker
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper col-11">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Speaker</h4>
+                    <p class="card-description">
+                        Speaker Create
+                    </p>
+   @*                 <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>*@
+@*                    <img src="~/admin/images/faces/@Model.Image" width="100" alt="Alternate Text" />*@
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="Photo">Photo</label>
+                            <input class="form-control" asp-for="Photo" placeholder="Photo">
+                            <span asp-validation-for="Photo" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Fullname">Fullname</label>
+                            <input class="form-control" asp-for="Fullname" placeholder="Fullname">
+                            <span asp-validation-for="Fullname" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Profession">Profession</label>
+                            <input class="form-control" asp-for="Profession" placeholder="Profession">
+                            <span asp-validation-for="Profession" class="text-danger"></span>
+                        </div>
+                        <div class="form-check form-check-flat form-check-primary">
+                            <button type="submit" class="btn btn-primary mr-2">Create</button>
+                            <a class="btn btn-light" asp-action="Index">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            $("#form").submit(function (e) {
+                let accept = $(".photoInput").attr("accept");
+                let error = $("#photoError").text();
+                let text = $(".photoInput").val();
+                let fullname = $("#Fullname").val()
+                let profession = $("#Profession").val()
+                if (text != "" && error == "" && accept == "image/*" && fullname.trim() != "" && profession.trim() !="") {
+                    e.preventDefault();
+                    swal({
+                        title: "Finish",
+                        text: "Speaker has been succesfully created",
+                        icon: "success",
+                        button: "Done",
+                    }).then(function () {
+                        setTimeout(() => { document.querySelector("#form").submit() }, 100)
+                    })
+                }
+            })
+        </script>
+}

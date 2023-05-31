@@ -1,0 +1,67 @@
+﻿@using BackEndProject.Areas.Admin.ViewModels;
+@model EventVM
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper col-11">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Event</h4>
+                    <p class="card-description">
+                        Event Create
+                    </p>
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="Photo">Photo</label>
+                            <input class="form-control" asp-for="Photo" placeholder="Photo">
+                            <span asp-validation-for="Photo" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Title">Title</label>
+                            <input class="form-control" asp-for="Title" placeholder="Title">
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Description">Description</label>
+                            <input class="form-control"  asp-for="Description" placeholder="Description">
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Day">Day</label>
+                            <input class="form-control" asp-for="Day" placeholder="Day">
+                            <span asp-validation-for="Day" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Time">Time</label>
+                            <input class="form-control"  asp-for="Time" placeholder="Time">
+                            <span asp-validation-for="Time" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Venue">Venue</label>
+                            <input class="form-control" asp-for="Venue" placeholder="Venue">
+                            <span asp-validation-for="Venue" class="text-danger"></span>
+                        </div>
+                        <div class="mt-3">
+                            <label style="font-size:15px;font-weight:bold">Select Speaker: </label>
+                            <select class="js-example-basic-multiple" id="selectSpeaker" name="states" multiple="multiple" style="width:100%">
+                                @foreach (Speaker speaker in Model.Speakers)
+                                {
+                                        <option value="@speaker.Id">@speaker.Fullname</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-check form-check-flat form-check-primary">
+                            <button type="submit" class="btn btn-warning mr-2">Create</button>
+                            <a class="btn btn-light" asp-action="Index">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
