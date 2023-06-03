@@ -1,6 +1,6 @@
-﻿@model List<Teacher>
+﻿@model IEnumerable<Teacher>
 @{
-    ViewData["Title"] = "Blog Page";
+    ViewData["Title"] = "Teacher Page";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -16,19 +16,19 @@
                             <thead>
                                 <tr>
                                     <th>Profile</th>
-                                    <th>Name</th>
+                                    <th>Fullname</th>
                                     <th>Profession</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var teachersItem in Model)
+                                @foreach (Teacher teachersItem in Model)
                                 {
                                     <tr>
                                         <td>
                                             <img style="width:60px; height:60px;" src="~/admin/images/faces/@teachersItem.Image" />
                                         </td>
-                                        <td style="max-width:200px">@teachersItem.Name</td>
+                                        <td style="max-width:200px">@teachersItem.Fullname</td>
                                         <td style="max-width:300px">@teachersItem.Profession</td>
                                         <td>
                                             <a class="btn btn-success" asp-action="Read" asp-route-id="@teachersItem.Id">Read</a>

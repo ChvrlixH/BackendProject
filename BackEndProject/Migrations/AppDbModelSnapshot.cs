@@ -144,8 +144,8 @@ namespace BackEndProject.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -176,6 +176,9 @@ namespace BackEndProject.Migrations
                     b.Property<int>("ClassDuration")
                         .HasColumnType("int");
 
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
@@ -197,6 +200,9 @@ namespace BackEndProject.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseId")
+                        .IsUnique();
 
                     b.ToTable("CoursesInfo");
                 });
@@ -270,20 +276,31 @@ namespace BackEndProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.Property<int>("Rate")
+                    b.Property<int>("Communication")
                         .HasColumnType("int");
 
-                    b.Property<int>("SkillId")
+                    b.Property<int>("Design")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Development")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Innovation")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Language")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamLeader")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SkillId");
+                    b.HasIndex("TeacherId")
+                        .IsUnique();
 
                     b.ToTable("Skills");
                 });
@@ -296,17 +313,37 @@ namespace BackEndProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Facebook")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SocialMediaId")
+                    b.Property<string>("Instagram")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mail")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<int>("Number")
                         .HasColumnType("int");
+
+                    b.Property<string>("Pinterest")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Twitter")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SocialMediaId");
+                    b.HasIndex("TeacherId")
+                        .IsUnique();
 
                     b.ToTable("SocialMedias");
                 });
@@ -366,6 +403,11 @@ namespace BackEndProject.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
 
+                    b.Property<string>("Fullname")
+                        .IsRequired()
+                        .HasMaxLength(28)
+                        .HasColumnType("nvarchar(28)");
+
                     b.Property<string>("Hobbies")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -375,18 +417,8 @@ namespace BackEndProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Mail")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(28)
-                        .HasColumnType("nvarchar(28)");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Profession")
                         .IsRequired()
@@ -531,6 +563,17 @@ namespace BackEndProject.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BackEndProject.Models.CourseInfo", b =>
+                {
+                    b.HasOne("BackEndProject.Models.Course", "Course")
+                        .WithOne("CourseInfo")
+                        .HasForeignKey("BackEndProject.Models.CourseInfo", "CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
             modelBuilder.Entity("BackEndProject.Models.EventSpeaker", b =>
                 {
                     b.HasOne("BackEndProject.Models.Event", "Event")
@@ -553,8 +596,8 @@ namespace BackEndProject.Migrations
             modelBuilder.Entity("BackEndProject.Models.Skill", b =>
                 {
                     b.HasOne("BackEndProject.Models.Teacher", "Teacher")
-                        .WithMany("Skills")
-                        .HasForeignKey("SkillId")
+                        .WithOne("Skills")
+                        .HasForeignKey("BackEndProject.Models.Skill", "TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -564,8 +607,8 @@ namespace BackEndProject.Migrations
             modelBuilder.Entity("BackEndProject.Models.SocialMedia", b =>
                 {
                     b.HasOne("BackEndProject.Models.Teacher", "Teacher")
-                        .WithMany("SocialMedias")
-                        .HasForeignKey("SocialMediaId")
+                        .WithOne("SocialMedias")
+                        .HasForeignKey("BackEndProject.Models.SocialMedia", "TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -623,6 +666,12 @@ namespace BackEndProject.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BackEndProject.Models.Course", b =>
+                {
+                    b.Navigation("CourseInfo")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("BackEndProject.Models.Event", b =>
                 {
                     b.Navigation("Speakers");
@@ -635,9 +684,11 @@ namespace BackEndProject.Migrations
 
             modelBuilder.Entity("BackEndProject.Models.Teacher", b =>
                 {
-                    b.Navigation("Skills");
+                    b.Navigation("Skills")
+                        .IsRequired();
 
-                    b.Navigation("SocialMedias");
+                    b.Navigation("SocialMedias")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

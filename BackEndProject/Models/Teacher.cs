@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackEndProject.Models;
 
@@ -8,7 +9,7 @@ public class Teacher
     [Required]
     public string Image { get; set; } = null!;
     [Required,StringLength(28, MinimumLength =3)]
-    public string Name { get; set; } = null!;
+    public string Fullname { get; set; } = null!;
     [Required,StringLength(55, MinimumLength =5)]
     public string Profession { get; set; } = null!;
     [Required, StringLength(256, MinimumLength = 5)]
@@ -21,14 +22,15 @@ public class Teacher
     public string Hobbies { get; set; } = null!;
     [Required, StringLength(80, MinimumLength = 5)]
     public string Faculty { get; set; } = null!;
-    [Required, MaxLength(256)]
-    public string Mail { get; set; } = null!;
-    [Required]
-    public int Number { get; set; }
+    public bool IsDeleted { get; set; } = false;
 
-    public ICollection<Skill> Skills { get; set; } = null!;
-    public ICollection<SocialMedia> SocialMedias { get; set; } = null!;
-   
+    public virtual Skill Skills { get; set; } = null!;
+    public virtual SocialMedia SocialMedias { get; set; } = null!;
+
+    [NotMapped]
+    [Required]
+    public IFormFile Photo { get; set; }
+
 
 
 }

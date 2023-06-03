@@ -103,6 +103,7 @@ namespace BackEndProject.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete (int? id)
         {
             if (id == null) return NotFound();
@@ -114,6 +115,7 @@ namespace BackEndProject.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeletePost(int? id)
         {
             if (id == null) return NotFound();

@@ -72,9 +72,9 @@ namespace BackEndProject.Areas.Admin.Controllers
                 ModelState.AddModelError("Image", "Faylin tipi image olmalidir.");
                 return View(model);
             }
-            if (!editedEvent.Photo.CheckFileSize(1000))
+            if (!editedEvent.Photo.CheckFileSize(1500))
             {
-                ModelState.AddModelError("Image", "Faylin hecmi 1 mb-dan kicik olmalidir.");
+                ModelState.AddModelError("Image", "Faylin hecmi 1.5 mb-dan kicik olmalidir.");
                 return View(model);
             }
 
@@ -175,6 +175,7 @@ namespace BackEndProject.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id is null) { return NotFound(); }
@@ -188,6 +189,7 @@ namespace BackEndProject.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeletePost(int? id)
         {
             if (id is null) { return NotFound(); }

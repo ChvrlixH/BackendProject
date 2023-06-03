@@ -11,4 +11,6 @@ public class CourseInfo
     public int Students { get; set; }
     public string Assesments { get; set; } = null!; 
     public int Fee { get; set; }
+    public int CourseId { get; set; }
+    public virtual Course Course { get; set; }
 }

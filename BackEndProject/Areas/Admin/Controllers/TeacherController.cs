@@ -1,7 +1,11 @@
 ﻿using BackEndProject.Areas.Admin.ViewModels;
+using BackEndProject.Models;
+using BackEndProject.Utils;
+using BackEndProject.Utils.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.DependencyResolver;
 using System.Data;
 
 namespace BackEndProject.Areas.Admin.Controllers
@@ -11,125 +15,146 @@ namespace BackEndProject.Areas.Admin.Controllers
     public class TeacherController : Controller
     {
         private readonly AppDb _appDb;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public TeacherController(AppDb appDb)
+        public TeacherController(AppDb appDb, IWebHostEnvironment webHostEnvironment)
         {
             _appDb = appDb;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Index()
         {
-            List<Teacher> teachers = await _appDb.Teachers.Include(t => t.Skills).Include(t => t.SocialMedias).ToListAsync();
-            return View(teachers);
+            return View(_appDb.Teachers);
         }
 
+        [Authorize(Roles = "Admin,Moderator")]
         public IActionResult Create()
         {
-            ViewBag.Skills = _appDb.Skills.AsEnumerable();
-            ViewBag.SocialMedias = _appDb.SocialMedias.AsEnumerable();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TeacherVM teacherVM)
+        [Authorize(Roles = "Admin,Moderator")]
+        public async Task<IActionResult> Create(Teacher teacher)
         {
-            ViewBag.Skills = _appDb.Skills.AsEnumerable();
-            ViewBag.SocialMedias = _appDb.SocialMedias.AsEnumerable();
-
-            if (!ModelState.IsValid)
-                return View();
-
-            if (!_appDb.Skills.Any(s => s.Id == teacherVM.SkillId))
-                return BadRequest();
-
-            if (!_appDb.SocialMedias.Any(s => s.Id == teacherVM.SocialMediaId))
-                return BadRequest();
-
-            Teacher teacher = new()
+            if (!teacher.Photo.CheckFileType(ContentType.image.ToString()))
             {
-                Name = teacherVM.Name,
-                Image = teacherVM.Image,
-                Profession = teacherVM.Profession,
-                Description = teacherVM.Description,
-                Degree = teacherVM.Degree,
-                Experience = teacherVM.Experience,
-                Hobbies = teacherVM.Hobbies,
-                Faculty = teacherVM.Faculty,
-                Mail = teacherVM.Mail,
-                Number = teacherVM.Number,
-                Skills = teacherVM.Skills,
-                SocialMedias = teacherVM.SocialMedias
+                ModelState.AddModelError("Image", "Faylin tipi image olmalidir.");
+                return View();
+            }
+            if (!teacher.Photo.CheckFileSize(1000))
+            {
+                ModelState.AddModelError("Image", "Faylin hecmi 1 mb-dan kicik olmalidir.");
+                return View();
+            }
+
+            Teacher newTeacher = new()
+            {
+                Fullname = teacher.Fullname,
+                Profession = teacher.Profession,
+                Description = teacher.Description,
+                Degree = teacher.Degree,
+                Experience = teacher.Experience,
+                Hobbies = teacher.Hobbies,
+                Faculty = teacher.Faculty
             };
 
-            await _appDb.Teachers.AddAsync(teacher);
+            newTeacher.Image = await teacher.Photo.SaveImg(_webHostEnvironment.WebRootPath, "admin", "images", "faces");
+
+            SocialMedia socialMedia = new()
+            {
+                Mail = teacher.SocialMedias.Mail,
+                Number = teacher.SocialMedias.Number,
+                Instagram = teacher.SocialMedias.Instagram,
+                Facebook = teacher.SocialMedias.Facebook,
+                Pinterest = teacher.SocialMedias.Pinterest,
+                Twitter = teacher.SocialMedias.Twitter
+            };
+
+            Skill skill = new()
+            {
+                Language = teacher.Skills.Language,
+                TeamLeader = teacher.Skills.TeamLeader,
+                Development = teacher.Skills.Development,
+                Design = teacher.Skills.Design,
+                Communication = teacher.Skills.Communication,
+                Innovation = teacher.Skills.Innovation,
+            };
+
+            newTeacher.Skills = skill;
+            newTeacher.SocialMedias= socialMedia;
+
+            await _appDb.Teachers.AddAsync(newTeacher);
             await _appDb.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+
         }
 
+        [Authorize(Roles = "Admin,Moderator")]
         public async Task<IActionResult> Read(int id)
         {
+            if (id == null) return NotFound();
             Teacher? teacher = await _appDb.Teachers.AsNoTracking().Include(t => t.Skills).Include(t => t.SocialMedias).FirstOrDefaultAsync(t => t.Id == id);
             if (teacher is null) { return NotFound(); }
 
             return View(teacher);
         }
 
-        public async Task<IActionResult> Update(int id)
+        [Authorize(Roles = "Admin,Moderator")]
+        public async Task<IActionResult> Update(int? id)
         {
-            Teacher? teacher = await _appDb.Teachers.FirstOrDefaultAsync(t => t.Id == id);
+            if (id == null) return NotFound();
+            Teacher teacher = await _appDb.Teachers.Include(t => t.Skills).Include(t => t.SocialMedias).FirstOrDefaultAsync(t => t.Id == id);
             if (teacher is null) { return NotFound(); }
 
-            TeacherVM teacherVM = new()
-            {
-                Name = teacher.Name,
-                Image = teacher.Image,
-                Profession = teacher.Profession,
-                Description = teacher.Description,
-                Degree = teacher.Degree,
-                Experience = teacher.Experience,
-                Hobbies = teacher.Hobbies,
-                Faculty = teacher.Faculty,
-                Mail = teacher.Mail,
-                Number = teacher.Number,
-                Skills = teacher.Skills,
-                SocialMedias = teacher.SocialMedias
-            };
-
-            return View(teacherVM);
+            return View(teacher);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Moderator")]
 
-        public async Task<IActionResult> Update(int id, TeacherVM teacherVM)
+        public async Task<IActionResult> Update(int id, Teacher editedTeacher)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
-            if (!_appDb.Skills.Any(s => s.Id == teacherVM.SkillId))
-                return BadRequest();
-
-            if (!_appDb.SocialMedias.Any(s => s.Id == teacherVM.SocialMediaId))
-                return BadRequest();
-
-            Teacher? teacher = await _appDb.Teachers.FirstOrDefaultAsync(t => t.Id == id);
+            if (id == null) return NotFound();
+            Teacher teacher = await _appDb.Teachers.Include(t => t.Skills).Include(t => t.SocialMedias).FirstOrDefaultAsync(t => t.Id == id);
             if (teacher is null) { return NotFound(); }
 
-            teacher.Name = teacherVM.Name;
-            teacher.Image = teacherVM.Image;
-            teacher.Profession = teacherVM.Profession;
-            teacher.Description = teacherVM.Description;
-            teacher.Degree = teacherVM.Degree;
-            teacher.Experience = teacherVM.Experience;
-            teacher.Hobbies = teacherVM.Hobbies;
-            teacher.Faculty = teacherVM.Faculty;
-            teacher.Mail = teacherVM.Mail;
-            teacher.Number = teacherVM.Number;
-            teacher.Skills = teacherVM.Skills;
-            teacher.SocialMedias = teacherVM.SocialMedias;
+            if (!editedTeacher.Photo.CheckFileType(ContentType.image.ToString()))
+            {
+                ModelState.AddModelError("Image", "Faylin tipi image olmalidir.");
+                return View(teacher);
+            }
+            if (!editedTeacher.Photo.CheckFileSize(1000))
+            {
+                ModelState.AddModelError("Image", "Faylin hecmi 1 mb-dan kicik olmalidir.");
+                return View(teacher);
+            }
+
+            Utils.Enums.FileCourse.DeleteFile(_webHostEnvironment.WebRootPath, "admin", "images", "faces", teacher.Image);
+            teacher.Image = await editedTeacher.Photo.SaveImg(_webHostEnvironment.WebRootPath, "admin", "images", "faces");
+
+            teacher.Fullname = editedTeacher.Fullname;
+            teacher.Profession = editedTeacher.Profession;
+            teacher.Description = editedTeacher.Description;
+            teacher.Degree = editedTeacher.Degree;
+            teacher.Experience = editedTeacher.Experience;
+            teacher.Hobbies = editedTeacher.Hobbies;
+            teacher.Faculty = editedTeacher.Faculty;
+            teacher.SocialMedias.Mail = editedTeacher.SocialMedias.Mail;
+            teacher.SocialMedias.Number = editedTeacher.SocialMedias.Number;
+            teacher.SocialMedias.Instagram = editedTeacher.SocialMedias.Instagram;
+            teacher.SocialMedias.Facebook = editedTeacher.SocialMedias.Facebook;
+            teacher.SocialMedias.Pinterest = editedTeacher.SocialMedias.Pinterest;
+            teacher.SocialMedias.Twitter = editedTeacher.SocialMedias.Twitter;
+            teacher.Skills.Language = editedTeacher.Skills.Language;
+            teacher.Skills.TeamLeader = editedTeacher.Skills.TeamLeader;
+            teacher.Skills.Development = editedTeacher.Skills.Development;
+            teacher.Skills.Design = editedTeacher.Skills.Design;
+            teacher.Skills.Communication = editedTeacher.Skills.Communication;
+            teacher.Skills.Innovation = editedTeacher.Skills.Innovation;
 
             await _appDb.SaveChangesAsync();
 
@@ -137,9 +162,11 @@ namespace BackEndProject.Areas.Admin.Controllers
 
         }
 
-        public async Task<IActionResult> Delete(int id)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int? id)
         {
-            var teachers = await _appDb.Teachers.Include(t => t.Skills).Include(t => t.SocialMedias).FirstOrDefaultAsync(t => t.Id == id);
+            if (id == null) return NotFound();
+            Teacher teachers = await _appDb.Teachers.Include(t => t.Skills).Include(t => t.SocialMedias).FirstOrDefaultAsync(t => t.Id == id);
             if (teachers is null) { return NotFound(); }
 
             return View(teachers);
@@ -148,11 +175,16 @@ namespace BackEndProject.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName(nameof(Delete))]
-        public async Task<IActionResult> DeleteTeacher(int id)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteTeacher(int? id)
         {
-            var teachers = await _appDb.Teachers.FirstOrDefaultAsync(t => t.Id == id);
+            if (id == null) return NotFound();
+            Teacher teachers = await _appDb.Teachers.Include(t => t.Skills).Include(t => t.SocialMedias).FirstOrDefaultAsync(t => t.Id == id);
             if (teachers is null) { return NotFound(); }
 
+            Utils.Enums.FileCourse.DeleteFile(_webHostEnvironment.WebRootPath, "admin", "images", "faces", teachers.Image);
+            
+            _appDb.Teachers.Remove(teachers);
             await _appDb.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

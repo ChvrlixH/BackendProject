@@ -9,6 +9,7 @@ using System.Data;
 namespace BackEndProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin,Moderator")]
     public class UsersController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
@@ -71,7 +72,7 @@ namespace BackEndProject.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ChangeRole(string id, UserVM userVM)
         {
             var user = await _userManager.FindByIdAsync(id);

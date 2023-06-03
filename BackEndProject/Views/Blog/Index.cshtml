@@ -1,4 +1,4 @@
-﻿
+﻿@model BlogVM;
 @{
     ViewData["Title"] = "Blog page";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -25,177 +25,28 @@
         <div class="blog-area pt-150 pb-150">
             <div class="container">
                 <div class="row">
+                    @foreach(Blog blogItem in Model.blog)
+                    {
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="single-blog mb-60">
                             <div class="blog-img">
-                                <a href="#"><img src="img/blog/blog1.jpg" alt="blog"></a>
+                            <a asp-controller="Blog" asp-action="Detail" asp-route-id="@blogItem.Id"><img style="width:370px; height:250px;" src="~/admin/images/faces/@blogItem.Image" alt="blog"></a>
                                 <div class="blog-hover">
                                     <i class="fa fa-link"></i>
                                 </div>
                             </div>
                             <div class="blog-content">
-                                <div class="blog-top">
-                                    <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
+                                <div class="blog-top" >
+                                <a asp-controller="Blog" asp-action="Detail" asp-route-id="@blogItem.Id">   <p>@blogItem.Name  /  @blogItem.Date  /  <i class="fa fa-comments-o"></i> @blogItem.Comment</p> </a>
                                 </div>
                                 <div class="blog-bottom">
-                                    <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                                    <a href="blog-details.html">read more</a>
+                                <h2><a asp-controller="Blog" asp-action="Detail" asp-route-id="@blogItem.Id">@blogItem.Title </a></h2>
+                                <a asp-controller="Blog" asp-action="Detail" asp-route-id="@blogItem.Id">read more</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="single-blog mb-60">
-                            <div class="blog-img">
-                                <a href="#"><img src="img/blog/blog2.jpg" alt="blog"></a>
-                                <div class="blog-hover">
-                                    <i class="fa fa-link"></i>
-                                </div>
-                            </div>
-                            <div class="blog-content">
-                                <div class="blog-top">
-                                    <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
-                                </div>
-                                <div class="blog-bottom">
-                                    <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                                    <a href="blog-details.html">read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="single-blog mb-60">
-                            <div class="blog-img">
-                                <a href="#"><img src="img/blog/blog3.jpg" alt="blog"></a>
-                                <div class="blog-hover">
-                                    <i class="fa fa-link"></i>
-                                </div>
-                            </div>
-                            <div class="blog-content">
-                                <div class="blog-top">
-                                    <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
-                                </div>
-                                <div class="blog-bottom">
-                                    <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                                    <a href="blog-details.html">read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="single-blog mb-60">
-                            <div class="blog-img">
-                                <a href="#"><img src="img/blog/blog4.jpg" alt="blog"></a>
-                                <div class="blog-hover">
-                                    <i class="fa fa-link"></i>
-                                </div>
-                            </div>
-                            <div class="blog-content">
-                                <div class="blog-top">
-                                    <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
-                                </div>
-                                <div class="blog-bottom">
-                                    <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                                    <a href="blog-details.html">read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="single-blog mb-60">
-                            <div class="blog-img">
-                                <a href="#"><img src="img/blog/blog5.jpg" alt="blog"></a>
-                                <div class="blog-hover">
-                                    <i class="fa fa-link"></i>
-                                </div>
-                            </div>
-                            <div class="blog-content">
-                                <div class="blog-top">
-                                    <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
-                                </div>
-                                <div class="blog-bottom">
-                                    <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                                    <a href="blog-details.html">read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="single-blog mb-60">
-                            <div class="blog-img">
-                                <a href="#"><img src="img/blog/blog6.jpg" alt="blog"></a>
-                                <div class="blog-hover">
-                                    <i class="fa fa-link"></i>
-                                </div>
-                            </div>
-                            <div class="blog-content">
-                                <div class="blog-top">
-                                    <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
-                                </div>
-                                <div class="blog-bottom">
-                                    <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                                    <a href="blog-details.html">read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 hidden-xs">
-                        <div class="single-blog">
-                            <div class="blog-img">
-                                <a href="#"><img src="img/blog/blog7.jpg" alt="blog"></a>
-                                <div class="blog-hover">
-                                    <i class="fa fa-link"></i>
-                                </div>
-                            </div>
-                            <div class="blog-content">
-                                <div class="blog-top">
-                                    <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
-                                </div>
-                                <div class="blog-bottom">
-                                    <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                                    <a href="blog-details.html">read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 hidden-xs">
-                        <div class="single-blog">
-                            <div class="blog-img">
-                                <a href="#"><img src="img/blog/blog8.jpg" alt="blog"></a>
-                                <div class="blog-hover">
-                                    <i class="fa fa-link"></i>
-                                </div>
-                            </div>
-                            <div class="blog-content">
-                                <div class="blog-top">
-                                    <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
-                                </div>
-                                <div class="blog-bottom">
-                                    <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                                    <a href="blog-details.html">read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 hidden-sm col-xs-12">
-                        <div class="single-blog">
-                            <div class="blog-img">
-                                <a href="#"><img src="img/blog/blog9.jpg" alt="blog"></a>
-                                <div class="blog-hover">
-                                    <i class="fa fa-link"></i>
-                                </div>
-                            </div>
-                            <div class="blog-content">
-                                <div class="blog-top">
-                                    <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
-                                </div>
-                                <div class="blog-bottom">
-                                    <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                                    <a href="blog-details.html">read more</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            }
                 </div>
                 <div class="row">
                     <div class="col-xs-12">

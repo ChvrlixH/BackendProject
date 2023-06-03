@@ -1,5 +1,4 @@
-﻿@using BackEndProject.Areas.Admin.ViewModels;
-@model TeacherVM;
+﻿@model Teacher;
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -14,16 +13,17 @@
                     <p class="card-description">
                         Product Create
                     </p>
+                    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
                     <form class="forms-sample" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="Image">Image</label>
-                            <input class="form-control" asp-for="Image" placeholder="Image">
-                            <span asp-validation-for="Image" class="text-danger"></span>
+                            <label for="Photo">Photo</label>
+                            <input class="form-control" asp-for="Photo" placeholder="Photo">
+                            <span asp-validation-for="Photo" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label for="Name">Name</label>
-                            <input class="form-control" asp-for="Name" placeholder="Name">
-                            <span asp-validation-for="Name" class="text-danger"></span>
+                            <label for="Fullname">Fullname</label>
+                            <input class="form-control" asp-for="Fullname" placeholder="Fullname">
+                            <span asp-validation-for="Fullname" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="Profession">Profession</label>
@@ -57,41 +57,65 @@
                         </div>
                         <div class="form-group">
                             <label for="Mail">Mail</label>
-                            <input class="form-control" asp-for="Mail" placeholder="Mail">
-                            <span asp-validation-for="Mail" class="text-danger"></span>
+                            <input class="form-control" asp-for="SocialMedias.Mail" placeholder="Mail">
+                            <span asp-validation-for="SocialMedias.Mail" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="Number">Number</label>
-                            <input class="form-control" asp-for="Number" placeholder="Number">
-                            <span asp-validation-for="Number" class="text-danger"></span>
+                            <input class="form-control" asp-for="SocialMedias.Number" placeholder="Number">
+                            <span asp-validation-for="SocialMedias.Number" class="text-danger"></span>
+                        </div>
+                           <div class="form-group">
+                            <label for="Instagram">Instagram</label>
+                            <input class="form-control" asp-for="SocialMedias.Instagram" placeholder="Instagram">
+                            <span asp-validation-for="SocialMedias.Instagram" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label for="SkillId">Skills</label>
-                            <select class="form-control" asp-for="SkillId">
-                                @foreach (Skill skill in ViewBag.Skills)
-                                {
-                                    <option type="checkbox" class="form-control" value="@skill.Id"> @skill.Name </option>
-                                }
-                            </select>
+                            <label for="Facebook">Facebook</label>
+                            <input class="form-control" asp-for="SocialMedias.Facebook" placeholder="Facebook">
+                            <span asp-validation-for="SocialMedias.Facebook" class="text-danger"></span>
                         </div>
-                         <div class="form-group">
-                            <label for="SkillId">Skill Rate</label>
-                            <div class="form-control" asp-for="SkillId">
-                                @foreach (Skill skill in ViewBag.Skills)
-                                {
-                                    <input class="form-control"@skill.Rate>
-                                }
-                            </div>
+                           <div class="form-group">
+                            <label for="Pinterest">Pinterest</label>
+                            <input class="form-control" asp-for="SocialMedias.Pinterest" placeholder="Pinterest">
+                            <span asp-validation-for="SocialMedias.Pinterest" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label for="SocialMediaId">Social Media</label>
-                            <select class="form-control" asp-for="SocialMediaId">
-                                @foreach (SocialMedia socialMedia in ViewBag.SocialMedias)
-                                {
-                                    <option type="checkbox" class="form-control" value="@socialMedia.Id"> @socialMedia.Name </option>
-                                }
-                            </select>
+                            <label for="Twitter">Twitter</label>
+                            <input class="form-control" asp-for="SocialMedias.Twitter" placeholder="Twitter">
+                            <span asp-validation-for="SocialMedias.Twitter" class="text-danger"></span>
                         </div>
+                        <div class="form-group">
+                            <label for="Language">Language</label>
+                            <input class="form-control" asp-for="Skills.Language" min="0" max="100" placeholder="Language">
+                            <span asp-validation-for="Skills.Language" class="text-danger"></span>
+                        </div>
+                           <div class="form-group">
+                            <label for="TeamLeader">Team Leader</label>
+                            <input class="form-control" asp-for="Skills.TeamLeader" min="0" max="100" placeholder="Team Leader">
+                            <span asp-validation-for="Skills.TeamLeader" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Developmnet">Developmnet</label>
+                            <input class="form-control" asp-for="Skills.Development" min="0" max="100" placeholder="Developmnet">
+                            <span asp-validation-for="Skills.Development" class="text-danger"></span>
+                        </div>
+                           <div class="form-group">
+                            <label for="Design">Design</label>
+                            <input class="form-control" asp-for="Skills.Design" min="0" max="100" placeholder="Design">
+                            <span asp-validation-for="Skills.Design" class="text-danger"></span>
+                        </div>
+                           <div class="form-group">
+                            <label for="Innovation">Innovation</label>
+                            <input class="form-control" asp-for="Skills.Innovation" min="0" max="100" placeholder="Innovation">
+                            <span asp-validation-for="Skills.Innovation" class="text-danger"></span>
+                        </div>
+                           <div class="form-group">
+                            <label for="Communication">Communication</label>
+                            <input class="form-control" asp-for="Skills.Communication" min="0" max="100" placeholder="Communication">
+                            <span asp-validation-for="Skills.Communication" class="text-danger"></span>
+                        </div>
+
                         <div class="form-check form-check-flat form-check-primary">
                             <button type="submit" class="btn btn-primary mr-2">Create</button>
                             <a class="btn btn-light" asp-action="Index">Cancel</a>

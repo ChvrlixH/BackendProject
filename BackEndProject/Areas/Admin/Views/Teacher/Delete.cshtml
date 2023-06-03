@@ -10,18 +10,85 @@
             <div style="width:200px; height:auto; margin-bottom: 25px">
                 <img src="~/admin/images/faces/@Model.Image" style="width:100%; height:auto" />
             </div>
-            <h4> <span style="color:red">Name:</span> @Model.Name</h4>
+            <h4> <span style="color:red">Fullname:</span> @Model.Fullname</h4>
             <h4> <span style="color:red">Profession:</span> @Model.Profession</h4>
-            <h4> <span style="color:red">Description:</span> @Model.Description</h4>
+            <h4> <span style="color:red">Description:</span> @Html.Raw(Model.Description)</h4>
             <h4> <span style="color:red">Degree:</span> @Model.Degree</h4>
             <h4> <span style="color:red">Experience:</span> @Model.Experience</h4>
             <h4> <span style="color:red">Hobbies:</span> @Model.Hobbies</h4>
             <h4> <span style="color:red">Faculty:</span> @Model.Faculty</h4>
-            <h4> <span style="color:red">Mail:</span> @Model.Mail</h4>
-            <h4> <span style="color:red">Number:</span> @Model.Number</h4>
             <h4> <span style="color:red">Image:</span> @Model.Image</h4>
 
-             <div style="display:flex; gap:20px;">
+            <div class="col-md-9 col-sm-8 mt-5">
+                <div class="skill-area">
+                    <h4>Skills</h4>
+                </div>
+                <div class="skill-wrapper">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="skill-bar-item">
+                                <span>Language</span>
+                                <div class="progress" style="height:13px;border-radius:12px">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.Language%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.Language%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="skill-bar-item">
+                                <span>Team Leader</span>
+                                <div class="progress" style="height:13px;border-radius:12px;">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.TeamLeader%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.TeamLeader%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="skill-bar-item">
+                                <span>Development</span>
+                                <div class="progress" style="height:13px;border-radius:12px">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.Development%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.Development%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mt-3">
+                            <div class="skill-bar-item">
+                                <span>Design</span>
+                                <div class="progress" style="height:13px;border-radius:12px">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.Design%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.Design%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mt-3">
+                            <div class="skill-bar-item">
+                                <span>Innovation</span>
+                                <div class="progress" style="height:13px;border-radius:12px">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.Innovation%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.Innovation%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 mt-3">
+                            <div class="skill-bar-item">
+                                <span>Communication</span>
+                                <div class="progress" style="height:13px;border-radius:12px">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.Communication%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.Communication%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div style="display:flex; gap:20px;">
                 <a class="btn btn-info" asp-action="Index" style="margin-top:30px">Go Back</a>
                 <form method="post">
                     <button type="submit" class="btn btn-danger" style="margin-top:30px">Delete</button>

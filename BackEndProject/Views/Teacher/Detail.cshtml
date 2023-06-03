@@ -1,0 +1,135 @@
+﻿@model Teacher
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Banner Area Start -->
+<div class="banner-area-wrapper">
+    <div class="banner-area text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="banner-content-wrapper">
+                        <div class="banner-content">
+                            <h2>teachers / details</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner Area End -->
+<!-- Teacher Start -->
+<div class="teacher-details-area pt-150 pb-60">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 col-sm-5 col-xs-12">
+                <div class="teacher-details-img">
+                    <img style="height:480px; width:470px;" src="~/admin/images/faces/@Model.Image" alt="teacher">
+                </div>
+            </div>
+            <div class="col-md-7 col-sm-7 col-xs-12">
+                <div class="teacher-details-content ml-50">
+                    <h2>@Model.Fullname</h2>
+                    <h5>@Model.Profession</h5>
+                    <h4>about me</h4>
+                    <p>@Html.Raw(Model.Description)</p>
+                    <ul>
+                        <li><span>degree: </span>@Model.Degree</li>
+                        <li><span>experience: </span>@Model.Experience</li>
+                        <li><span>hobbies: </span>@Model.Hobbies</li>
+                        <li><span>faculty: </span>@Model.Faculty</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-4">
+                <div class="teacher-contact">
+                    <h4>contact information</h4>
+                    <p><span>mail me : </span>@Model.SocialMedias.Mail</p>
+                    <p><span>make a call : </span>+@Model.SocialMedias.Number</p>
+                    <ul>
+                        <li><a href="@Model.SocialMedias.Facebook"><i class="zmdi zmdi-facebook"></i></a></li>
+                        <li><a href="@Model.SocialMedias.Pinterest"><i class="zmdi zmdi-pinterest"></i></a></li>
+                        <li><a href="@Model.SocialMedias.Instagram"><i class="zmdi zmdi-instagram"></i></a></li>
+                        <li><a href="@Model.SocialMedias.Twitter"><i class="zmdi zmdi-twitter"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-8">
+                <div class="skill-area">
+                    <h4>Skills</h4>
+                </div>
+                <div class="skill-wrapper">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="skill-bar-item">
+                                <span>language</span>
+                                <div class="progress">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.Language%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.Language%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="skill-bar-item">
+                                <span>team leader</span>
+                                <div class="progress">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.TeamLeader%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.TeamLeader%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="skill-bar-item">
+                                <span>development</span>
+                                <div class="progress">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.Development%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.Development%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="skill-bar-item">
+                                <span>design</span>
+                                <div class="progress">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.Design%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.Design%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="skill-bar-item">
+                                <span>innovation</span>
+                                <div class="progress">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.Innovation%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.Innovation%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="skill-bar-item">
+                                <span>communication</span>
+                                <div class="progress">
+                                    <div data-wow-delay="1.2s" data-wow-duration="1.5s" style="width: @Model.Skills.Communication%; visibility: visible; animation-duration: 1.5s; animation-delay: 1.2s; animation-name: fadeInLeft;" data-progress="50%" class="progress-bar wow fadeInLeft">
+                                        <span class="text-top">@Model.Skills.Communication%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Teacher End -->
+
