@@ -133,9 +133,9 @@ namespace BackEndProject.Areas.Admin.Controllers
                 return View(teacher);
             }
 
-            Utils.Enums.FileCourse.DeleteFile(_webHostEnvironment.WebRootPath, "admin", "images", "faces", teacher.Image);
-            teacher.Image = await editedTeacher.Photo.SaveImg(_webHostEnvironment.WebRootPath, "admin", "images", "faces");
-
+           
+                Utils.Enums.FileCourse.DeleteFile(_webHostEnvironment.WebRootPath, "admin", "images", "faces", teacher.Image);
+                teacher.Image = await editedTeacher.Photo.SaveImg(_webHostEnvironment.WebRootPath, "admin", "images", "faces");
             teacher.Fullname = editedTeacher.Fullname;
             teacher.Profession = editedTeacher.Profession;
             teacher.Description = editedTeacher.Description;

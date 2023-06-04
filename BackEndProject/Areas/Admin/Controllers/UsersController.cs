@@ -39,6 +39,7 @@ namespace BackEndProject.Areas.Admin.Controllers
                     Fullname = user.Fullname,
                     Email = user.Email,
                     Username = user.UserName,
+                    IsActive = user.IsActive,
                     Role = userRoles.FirstOrDefault()
                 });
 
@@ -89,6 +90,37 @@ namespace BackEndProject.Areas.Admin.Controllers
             await _userManager.RemoveFromRoleAsync(user, userRole);
 
             await _userManager.AddToRoleAsync(user, userVM.Role);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Block(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if(user is null) { return NotFound(); }
+
+            if (!user.IsActive)
+                return BadRequest();
+
+            user.IsActive = false;
+            var Result = await _userManager.UpdateAsync(user);
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        [Authorize(Roles = "Admin")]
+        public async  Task<IActionResult> Unblock(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user is null) { return NotFound(); }
+
+            if (user.IsActive)
+                return BadRequest();
+
+            user.IsActive = true;
+            var Result = await _userManager.UpdateAsync(user);
 
             return RedirectToAction(nameof(Index));
         }

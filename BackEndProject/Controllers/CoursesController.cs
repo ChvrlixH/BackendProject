@@ -1,4 +1,7 @@
 ﻿
+using BackEndProject.Areas.Admin.ViewModels;
+using Microsoft.EntityFrameworkCore;
+
 namespace BackEndProject.Controllers
 {
     public class CoursesController : Controller
@@ -12,19 +15,31 @@ namespace BackEndProject.Controllers
 
         public IActionResult Index()
         {
-            List<Course> courses = _appDb.Courses.ToList();
+            List<Course> courses = _appDb.Courses.Include(c=>c.Categories).ToList();
 
-            CourseVM courseVM = new()
+            CoursesVM courseVM = new()
             {
-                course = courses,
+                Courses = courses,
             };
 
             return View(courseVM);
         }
 
-        public IActionResult Detail()
+        public async Task<IActionResult> Detail(int id)
         {
-            return View();
+            if (id == null) { return NotFound(); }
+
+            Course _course = await _appDb.Courses.FirstOrDefaultAsync(c => c.Id == id);
+            if (_course == null) { return NotFound(); }
+
+            List<CourseCategory> courseCategories = _appDb.CoursesCategories.Include(cc => cc.Category).Where(cc => cc.CategoryId == _course.Id).ToList();
+            CoursesVM courseVM = new()
+            {
+                Course = _course,
+                CourseCategories = courseCategories
+            };
+
+            return View(courseVM);
         }
     }
 }

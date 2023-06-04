@@ -8,8 +8,9 @@ public class AppDb : IdentityDbContext<AppUser>
 {
 	public AppDb(DbContextOptions<AppDb> options) : base(options) { }
 
-	public DbSet<CourseInfo> CoursesInfo { get; set; } = null!;
+	public DbSet<Category> Categories { get; set; } = null!;
 	public DbSet<Course> Courses { get; set; } = null!;
+	public DbSet<CourseCategory> CoursesCategories { get; set; } = null!;
 	public DbSet<Blog> Blogs { get; set; } = null!;
 	public DbSet<Teacher> Teachers { get; set; } = null!;
 	public DbSet<Skill> Skills { get; set; } = null!;

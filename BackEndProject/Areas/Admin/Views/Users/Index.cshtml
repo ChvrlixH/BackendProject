@@ -34,7 +34,14 @@
                                         <td>@user.Email</td>
                                         <td>@user.Role</td>
                                         <td>
-                                            <a class="btn btn-success" asp-action="Read" asp-route-id="@user.Id">Read</a>
+                                            @if(user.IsActive)
+                                            {
+                                            <a class="btn btn-success" asp-action="Block" asp-route-id="@user.Id">Active</a> 
+                                            }
+                                            @if(!user.IsActive)
+                                            {
+                                            <a class="btn btn-success" asp-action="Unblock" asp-route-id="@user.Id">Blocked</a>
+                                            }
                                             <a class="btn btn-warning" asp-action="ChangeRole" asp-route-id="@user.Id">Change Role</a>
                                             @*                                            <a class="btn btn-danger @(ViewBag.Count == 1 ? "disabled" : "")" asp-action="Delete" asp-route-id="@user.Id">Delete</a>*@
                                         </td>

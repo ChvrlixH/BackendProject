@@ -29,7 +29,7 @@ public class Teacher
 
     [NotMapped]
     [Required]
-    public IFormFile Photo { get; set; }
+    public IFormFile? Photo { get; set; }
 
 
 

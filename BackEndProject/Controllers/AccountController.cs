@@ -85,8 +85,13 @@ namespace BackEndProject.Controllers
                 return View();
             }
 
-            var signInResult = await _signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, true);
+            if(!user.IsActive)
+            {
+                ModelState.AddModelError("", "User is blocked");
+                return View();
+            }
 
+            var signInResult = await _signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, true);
             if (signInResult.IsLockedOut)
             {
                 ModelState.AddModelError("", "Your account is blocked temporary");
@@ -95,9 +100,8 @@ namespace BackEndProject.Controllers
             if (!signInResult.Succeeded)
             {
                 ModelState.AddModelError("", "Username or password invalid");
+                return View();
             }
-
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -190,9 +194,9 @@ namespace BackEndProject.Controllers
                 if (!await _roleManager.RoleExistsAsync(roleType.ToString()))
                     await _roleManager.CreateAsync(new IdentityRole { Name = roleType.ToString() });
             }
-            //await _roleManager.CreateAsync(new IdentityRole { Name = RoleType.Admin.ToString() });
-            //await _roleManager.CreateAsync(new IdentityRole { Name = RoleType.Moderator.ToString() });
-            //await _roleManager.CreateAsync(new IdentityRole { Name = RoleType.Member.ToString() });
+            //await _rolemanager.createasync(new identityrole { name = roletype.admin.tostring() });
+            //await _rolemanager.createasync(new identityrole { name = roletype.moderator.tostring() });
+            //await _rolemanager.createasync(new identityrole { name = roletype.member.tostring() });
 
             return Json("Ok");
         }

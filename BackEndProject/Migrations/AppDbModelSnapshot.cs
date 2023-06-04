@@ -134,7 +134,7 @@ namespace BackEndProject.Migrations
                     b.ToTable("Blogs");
                 });
 
-            modelBuilder.Entity("BackEndProject.Models.Course", b =>
+            modelBuilder.Entity("BackEndProject.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,26 +142,16 @@ namespace BackEndProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Image")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("BackEndProject.Models.CourseInfo", b =>
+            modelBuilder.Entity("BackEndProject.Models.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -176,14 +166,20 @@ namespace BackEndProject.Migrations
                     b.Property<int>("ClassDuration")
                         .HasColumnType("int");
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
                     b.Property<int>("Fee")
                         .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Language")
                         .IsRequired()
@@ -199,12 +195,37 @@ namespace BackEndProject.Migrations
                     b.Property<int>("Students")
                         .HasColumnType("int");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId")
-                        .IsUnique();
+                    b.ToTable("Courses");
+                });
 
-                    b.ToTable("CoursesInfo");
+            modelBuilder.Entity("BackEndProject.Models.CourseCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("CoursesCategories");
                 });
 
             modelBuilder.Entity("BackEndProject.Models.Event", b =>
@@ -563,13 +584,21 @@ namespace BackEndProject.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BackEndProject.Models.CourseInfo", b =>
+            modelBuilder.Entity("BackEndProject.Models.CourseCategory", b =>
                 {
-                    b.HasOne("BackEndProject.Models.Course", "Course")
-                        .WithOne("CourseInfo")
-                        .HasForeignKey("BackEndProject.Models.CourseInfo", "CourseId")
+                    b.HasOne("BackEndProject.Models.Category", "Category")
+                        .WithMany("Courses")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("BackEndProject.Models.Course", "Course")
+                        .WithMany("Categories")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("Course");
                 });
@@ -666,10 +695,14 @@ namespace BackEndProject.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BackEndProject.Models.Category", b =>
+                {
+                    b.Navigation("Courses");
+                });
+
             modelBuilder.Entity("BackEndProject.Models.Course", b =>
                 {
-                    b.Navigation("CourseInfo")
-                        .IsRequired();
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("BackEndProject.Models.Event", b =>

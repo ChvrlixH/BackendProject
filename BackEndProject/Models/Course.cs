@@ -12,7 +12,24 @@ namespace BackEndProject.Models
         public string Title { get; set; } = null!;
         [Required, StringLength(250, MinimumLength = 20)] 
         public string Description { get; set; } = null!;
-        public virtual CourseInfo CourseInfo { get; set; }
+        [Required]
+        public DateTime Starts { get; set; }
+        [Required, Range(1,48)]
+        public int Duration { get; set; }
+        [Required, Range(1,12)]
+        public int ClassDuration { get; set; }
+        [Required]
+        public string SkillLevel { get; set; } = null!;
+        [Required]
+        public string Language { get; set; } = null!;
+        [Required]
+        public int Students { get; set; }
+        [Required]
+        public string Assesments { get; set; } = null!;
+        [Required]
+        public int Fee { get; set; }
+        public ICollection<CourseCategory> Categories { get; set; }
+
         [NotMapped]
         [Required]
         public IFormFile Photo { get; set; }

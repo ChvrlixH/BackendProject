@@ -1,5 +1,5 @@
-﻿
-@model CourseVM
+﻿@using BackEndProject.Areas.Admin.ViewModels;
+@model CoursesVM;
 @{
     ViewData["Title"] = "Course page";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -39,12 +39,12 @@
             </div>
         </div>
         <div class="row">
-                 @foreach(var course in Model.course)
+                 @foreach(Course course in Model.Courses)
                  {
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="single-course mb-70">
                     <div class="course-img">
-                        <a href="course-details.html">
+                            <a asp-controller="Courses" asp-action="Detail" asp-route-id="@course.Id">
                             <img style="height:250px;" src="~/admin/images/faces/@course.Image" alt="course">
                             <div class="course-hover">
                                 <i class="fa fa-link"></i>
@@ -52,9 +52,9 @@
                         </a>
                     </div>
                     <div class="course-content">
-                        <h3><a href="course-details.html">@course.Title</a></h3>
+                            <h3><a asp-controller="Courses" asp-action="Detail" asp-route-id="@course.Id">@course.Title</a></h3>
                         <p>@course.Description</p>
-                        <a class="default-btn" href="course-details.html">read more</a>
+                            <a class="default-btn" asp-controller="Courses" asp-action="Detail" asp-route-id="@course.Id">read more</a>
                     </div>
                 </div>
             </div>

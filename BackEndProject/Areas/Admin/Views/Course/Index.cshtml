@@ -1,4 +1,4 @@
-﻿@model List<Course>
+﻿@model IEnumerable<Course>
 @{
     ViewData["Title"] = "Courses Page";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -22,7 +22,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var coursesItem in Model)
+                                @foreach (Course coursesItem in Model)
                                 {
                                     <tr>
                                         <td>

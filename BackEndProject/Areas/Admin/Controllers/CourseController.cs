@@ -1,4 +1,5 @@
 ﻿using BackEndProject.Areas.Admin.ViewModels;
+using BackEndProject.Models;
 using BackEndProject.Utils;
 using BackEndProject.Utils.Enums;
 using BackEndProject.ViewModels;
@@ -26,73 +27,92 @@ namespace BackEndProject.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Course> courses = _appDb.Courses.ToList();
-            return View(courses);
+            return View(_appDb.Courses);
         }
+
         [Authorize(Roles = "Admin,Moderator")]
         public IActionResult Create()
         {
-            return View();
+            CoursesVM coursesVM = new CoursesVM
+            {
+                Categories = _appDb.Categories.ToList()
+            };
+            return View(coursesVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Moderator")]
-        public async Task<IActionResult> Create(CoursesVM coursesVM)
+        public async Task<IActionResult> Create(CoursesVM _courses)
         {
-            if (!ModelState.IsValid)
-                return View();
-
-            if (coursesVM.Image == null)
+            CoursesVM coursesVM = new CoursesVM
             {
-                ModelState.AddModelError("Image", "Image bos olmamalidir.");
-                return View();
-            }
+                Categories = _appDb.Categories.ToList()
+            };
 
-            if (!coursesVM.Image.CheckFileSize(100))
+            if (!_courses.Photo.CheckFileSize(1500))
             {
-                ModelState.AddModelError("Image", "Faylin hecmi 100 kb-dan kicik olmalidir.");
-                return View();
+                ModelState.AddModelError("Image", "Faylin hecmi 1.5 mb-dan kicik olmalidir.");
+                return View(coursesVM);
             }
-            if (!coursesVM.Image.CheckFileType(ContentType.image.ToString()))
+            if (!_courses.Photo.CheckFileType(ContentType.image.ToString()))
             {
                 ModelState.AddModelError("Image", "Faylin tipi image olmalidir.");
-                return View();
+                return View(coursesVM);
             }
+
+            Course newCourse = new()
+            {
+                Title = _courses.Title,
+                Description = _courses.Description,
+                Starts = _courses.Starts,
+                Duration = _courses.Duration,
+                ClassDuration = _courses.ClassDuration,
+                SkillLevel = _courses.SkillLevel,
+                Language = _courses.Language,
+                Students = _courses.Students,
+                Assesments = _courses.Assesments,
+                Fee = _courses.Fee
+            };
+
+            newCourse.Image = await _courses.Photo.SaveImg(_webHostEnvironment.WebRootPath, "admin", "images", "faces");
 
             List<Course> courses = _appDb.Courses.ToList();
             foreach (var coursesItem in courses)
             {
-                if (coursesItem.Title == coursesVM.Title)
+                if (coursesItem.Title == _courses.Title)
                 {
                     ModelState.AddModelError("Title", "This title is available");
                     return View();
                 }
             }
 
-            string fileName = $"{Guid.NewGuid()}-{coursesVM.Image.FileName}";
-            string path = Path.Combine(_webHostEnvironment.WebRootPath, "admin", "images", "faces", fileName);
-            using (FileStream stream = new(path, FileMode.Create))
+            List<CourseCategory> courseCategory1 = new List<CourseCategory>();
+            string categories = Request.Form["states"];
+            string[] arr = categories.Split(",");
+            List<int> ids = new List<int>();
+            foreach (string categoryId in arr)
             {
-                await coursesVM.Image.CopyToAsync(stream);
+                ids.Add(Int32.Parse(categoryId));
             }
-
-            Course course = new()
+            foreach (int cId in ids)
             {
-                Title = coursesVM.Title,
-                Description = coursesVM.Description,
-                Image = fileName
-            };
-
-            await _appDb.Courses.AddAsync(course);
+                courseCategory1.Add(new CourseCategory
+                {
+                    CourseId = newCourse.Id,
+                    CategoryId = cId
+                });
+            }
+            newCourse.Categories= courseCategory1;
+            await _appDb.Courses.AddAsync(newCourse);
             await _appDb.SaveChangesAsync();
-
             return RedirectToAction(nameof(Index));
         }
 
         [Authorize(Roles = "Admin,Moderator")]
         public IActionResult Read(int id)
             {
+                if (id == null) { return NotFound(); }
                 Course? course = _appDb.Courses.AsNoTracking().FirstOrDefault(c => c.Id == id);
                 if (course is null) { return NotFound(); }
 
@@ -101,13 +121,14 @@ namespace BackEndProject.Areas.Admin.Controllers
 
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
-            {
-                Course? course = await _appDb.Courses.FirstOrDefaultAsync(c => c.Id == id);
+        {
+            if (id == null) { return NotFound(); }
+            Course? course = await _appDb.Courses.FirstOrDefaultAsync(c => c.Id == id);
+            IList<CourseCategory> courseCategories = _appDb.CoursesCategories.Include(c => c.Category).Where(c => c.CourseId == course.Id).ToList();
+            if (course is null) { return NotFound(); }
 
-                if (course is null) { return NotFound(); }
-
-                return View(course);
-            }
+            return View(course);
+        }
 
             [HttpPost]
             [ValidateAntiForgeryToken]
@@ -115,9 +136,10 @@ namespace BackEndProject.Areas.Admin.Controllers
             [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCourses(int id)
             {
-                Course? course = await _appDb.Courses.FirstOrDefaultAsync(c => c.Id == id);
-
-                if (course is null) { return NotFound(); }
+            if (id == null) { return NotFound(); }
+            Course? course = await _appDb.Courses.FirstOrDefaultAsync(c => c.Id == id);
+            IList<CourseCategory> courseCategories = _appDb.CoursesCategories.Include(c => c.Category).Where(c => c.CourseId == course.Id).ToList();
+            if (course is null) { return NotFound(); }
 
             FileCourse.DeleteFile(_webHostEnvironment.WebRootPath,  "admin", "images", "faces", course.Image);
 
@@ -128,29 +150,84 @@ namespace BackEndProject.Areas.Admin.Controllers
             }
 
         [Authorize(Roles = "Admin,Moderator")]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
             {
-                Course? course = _appDb.Courses.FirstOrDefault(c => c.Id == id);
+            if (id == null) { return NotFound(); }
+            Course? course = await _appDb.Courses.Include(c=>c.Categories).FirstOrDefaultAsync(c => c.Id == id);
+            IList<CourseCategory> courseCategories = _appDb.CoursesCategories.Include(c => c.Category).Where(c => c.CourseId == course.Id).ToList();
+            if (course is null) { return NotFound(); }
 
-                if (course is null) { return NotFound(); }
+            CoursesVM coursesVM = new()
+            {
+                Course= course,
+                Categories = _appDb.Categories.ToList(),
+                CourseCategories= courseCategories
+            };
 
-                return View(course);
+
+            return View(coursesVM);
             }
 
             [HttpPost]
             [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Moderator")]
-        public IActionResult Update(Course course, int id)
+        public async Task<IActionResult> Update(CoursesVM editedCourse, int id)
             {
-                Course? dBcourse = _appDb.Courses.AsNoTracking().FirstOrDefault(c => c.Id == id);
+            Course? course = await _appDb.Courses.Include(c => c.Categories).FirstOrDefaultAsync(c => c.Id == id);
+            IList<CourseCategory> courseCategories = _appDb.CoursesCategories.Include(c => c.Category).Where(c => c.CourseId == course.Id).ToList();
 
-                if (course is null) { return NotFound(); }
+            CoursesVM coursesVM = new()
+            {
+                Course = course,
+                Categories = _appDb.Categories.ToList(),
+                CourseCategories = courseCategories
+            };
 
+            if (!editedCourse.Photo.CheckFileType(ContentType.image.ToString()))
+            {
+                ModelState.AddModelError("Image", "Faylin tipi image olmalidir.");
+                return View(coursesVM);
+            }
+            if (!editedCourse.Photo.CheckFileSize(1500))
+            {
+                ModelState.AddModelError("Image", "Faylin hecmi 1.5 mb-dan kicik olmalidir.");
+                return View(coursesVM);
+            }
 
-            _appDb.Courses.Update(course);
-            _appDb.SaveChanges();
+            List<CourseCategory> courseCategory1 = new List<CourseCategory>();
+            string categories = Request.Form["states"];
+            string[] arr = categories.Split(",");
+            List<int> ids = new List<int>();
+            foreach (string categoryId in arr)
+            {
+                ids.Add(Int32.Parse(categoryId));
+            }
+            foreach (int cId in ids)
+            {
+                courseCategory1.Add(new CourseCategory
+                {
+                    CourseId = course.Id,
+                    CategoryId = cId
+                });
+            }
 
-                return RedirectToAction(nameof(Index));
+            Utils.Enums.FileCourse.DeleteFile(_webHostEnvironment.WebRootPath, "admin", "images", "faces", course.Image);
+            course.Image = await editedCourse.Photo.SaveImg(_webHostEnvironment.WebRootPath, "admin", "images", "faces");
+
+            course.Title = editedCourse.Title;
+            course.Description = editedCourse.Description;
+            course.Starts = editedCourse.Starts;
+            course.Duration = editedCourse.Duration;
+            course.ClassDuration = editedCourse.ClassDuration;
+            course.SkillLevel= editedCourse.SkillLevel;
+            course.Language= editedCourse.Language;
+            course.Students= editedCourse.Students;
+            course.Assesments= editedCourse.Assesments;
+            course.Fee= editedCourse.Fee;
+            course.Categories = courseCategory1;
+
+            await _appDb.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
             }
         }
     }
