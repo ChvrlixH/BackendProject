@@ -27,7 +27,7 @@
                         </div>
                         <div class="form-group">
                             <label for="Description">Description</label>
-                            <input class="form-control"  asp-for="Description" placeholder="Description">
+                            <input class="form-control"  asp-for="Description" id="eventeditorId" placeholder="Description">
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -65,3 +65,9 @@
     </div>
 </div>
 
+@section Scripts{
+	<script src="~/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace("eventeditorId");
+    </script>
+}

@@ -13,9 +13,9 @@ namespace BackEndProject.Areas.Admin.ViewModels
         public ICollection<Course> Courses { get; set; }
         [Required]
         public string Image { get; set; }
-        [Required, StringLength(25, MinimumLength = 5)]
+        [Required, StringLength(85, MinimumLength = 5)]
         public string Title { get; set; }
-        [Required, StringLength(150, MinimumLength = 20)]
+        [Required, StringLength(750, MinimumLength = 20)]
         public string Description { get; set; }
         [Required]
         public DateTime Starts { get; set; }

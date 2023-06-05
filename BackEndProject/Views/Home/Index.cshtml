@@ -1,4 +1,4 @@
-﻿
+﻿@model HomeVM;
 @{
     ViewData["Title"] = "Home page";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -36,54 +36,35 @@
                     </div>
                 </div>
                 <div class="row">
+                    @foreach(Course course in Model.Courses)
+                    {
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="single-course">
                             <div class="course-img">
-                                <a href="course-details.html"><img src="img/course/course1.jpg" alt="course">
+                            <a asp-controller="Courses" asp-action="Detail" asp-route-id="@course.Id">
+                                <img src="~/admin/images/faces/@course.Image" alt="course">
                                     <div class="course-hover">
                                         <i class="fa fa-link"></i>
                                     </div>
                                 </a>
                             </div>
                             <div class="course-content">
-                                <h3><a href="course-details.html">CSE ENGINEERING</a></h3>
-                                <p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human happiness</p>
-                                <a class="default-btn" href="course-details.html">read more</a>
+                            <h3><a asp-controller="Courses" asp-action="Detail" asp-route-id="@course.Id">@course.Title</a></h3>
+                                @if(course.Description.Length >= 130)
+                                {
+                            <p>
+                                @course.Description.Substring(0,130)...
+                                </p>
+                            }
+                            else
+                            {
+                                @course.Description
+                            }
+                            <a class="default-btn" asp-controller="Courses" asp-action="Detail" asp-route-id="@course.Id">read more</a>
                             </div>   
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="single-course">
-                            <div class="course-img">
-                                <a href="course-details.html"><img src="img/course/course2.jpg" alt="course">
-                                    <div class="course-hover">
-                                        <i class="fa fa-link"></i>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="course-content">
-                                <h3><a href="course-details.html">political science</a></h3>
-                                <p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human happiness</p>
-                                <a class="default-btn" href="course-details.html">read more</a>
-                            </div>   
-                        </div>
-                    </div>
-                    <div class="col-md-4 hidden-sm col-xs-12">
-                        <div class="single-course">
-                            <div class="course-img">
-                                <a href="course-details.html"><img src="img/course/course3.jpg" alt="course">
-                                    <div class="course-hover">
-                                        <i class="fa fa-link"></i>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="course-content">
-                                <h3><a href="course-details.html">micro biology</a></h3>
-                                <p>I must explain to you how all this a mistaken idea of denouncing great explorer of the rut the is lder of human happiness</p>
-                                <a class="default-btn" href="course-details.html">read more</a>
-                            </div>   
-                        </div>
-                    </div>
+            }
                 </div>
             </div>
         </div>
@@ -99,74 +80,27 @@
             </div>
         </div>
         <div class="row">
+            @foreach(Event _event in Model.Events)
+            {
             <div class="col-md-6 col-sm-12 col-xs-12">
                 <div class="single-event mb-35">
                     <div class="event-img">
-                        <a href="event-details.html"><img src="img/event/event1.jpg" alt="event"></a>
+                            <a asp-controller="Event" asp-action="Detail" asp-route-id="@_event.Id"><img style="width:214px; height:197px;" src="~/admin/images/faces/@_event.Image" alt="event"></a>
                     </div>
                     <div class="event-content text-left">
-                        <h3>20 June 2017</h3>
-                        <h4><a href="event-details.html">ADVANCE PHP WORKSHOP</a></h4>
+                        <h3>@_event.Day</h3>
+                        <h4><a asp-controller="Event" asp-action="Detail" asp-route-id="@_event.Id">@_event.Title</a></h4>
                         <ul>
-                            <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                            <li><i class="fa fa-map-marker"></i>New Yourk City</li>
+                            <li><i class="fa fa-clock-o"></i>@_event.Time</li>
+                            <li><i class="fa fa-map-marker"></i>@_event.Venue</li>
                         </ul>
                         <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-event hidden-sm hidden-xs">
-                    <div class="event-img">
-                        <a href="event-details.html"><img src="img/event/event3.jpg" alt="event"></a>
-                    </div>
-                    <div class="event-content text-left">
-                        <h3>16 June 2017</h3>
-                        <h4><a href="event-details.html">learning english history</a></h4>
-                        <ul>
-                            <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                            <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                        </ul>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
+                                <a class="default-btn" asp-controller="Event" asp-action="Detail" asp-route-id="@_event.Id">join now</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-12 col-xs-12">
-                <div class="single-event mb-35">
-                    <div class="event-img">
-                        <a href="event-details.html"><img src="img/event/event2.jpg" alt="event"></a>
-                    </div>
-                    <div class="event-content text-left">
-                        <h3>18 June 2017</h3>
-                        <h4><a href="event-details.html">DIGITAL MARKETING ANALYSIS</a></h4>
-                        <ul>
-                            <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                            <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                        </ul>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-event hidden-sm hidden-xs">
-                    <div class="event-img">
-                        <a href="event-details.html"><img src="img/event/event3.jpg" alt="event"></a>
-                    </div>
-                    <div class="event-content text-left">
-                        <h3>14 June 2017</h3>
-                        <h4><a href="event-details.html">UI & UX DESIGNER MEETUP</a></h4>
-                        <ul>
-                            <li><i class="fa fa-clock-o"></i>9.00 AM - 4.45 PM</li>
-                            <li><i class="fa fa-map-marker"></i>New Yourk City</li>
-                        </ul>
-                        <div class="event-content-right">
-                            <a class="default-btn" href="event-details.html">join now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>
@@ -183,63 +117,28 @@
             </div>
         </div>
         <div class="row">
+            @foreach(Blog blog in Model.Blogs)
+            {
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="single-blog">
                     <div class="blog-img">
-                        <a href="blog-details.html"><img src="img/blog/blog1.jpg" alt="blog"></a>
+                            <a asp-controller="Blog" asp-action="Detail" asp-route-id="@blog.Id"><img src="~/admin/images/faces/@blog.Image" alt="blog"></a>
                         <div class="blog-hover">
-                            <a href="blog-details.html"><i class="fa fa-link"></i></a>
+                                <a asp-controller="Blog" asp-action="Detail" asp-route-id="@blog.Id"><i class="fa fa-link"></i></a>
                         </div>
                     </div>
                     <div class="blog-content">
                         <div class="blog-top">
-                            <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
+                            <p>@blog.Name  /  @blog.Date  /  <i class="fa fa-comments-o"></i> @blog.Comment</p>
                         </div>
                         <div class="blog-bottom">
-                            <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                            <a href="blog-details.html">read more</a>
+                                <h2><a asp-controller="Blog" asp-action="Detail" asp-route-id="@blog.Id">@blog.Title</a></h2>
+                                <a asp-controller="Blog" asp-action="Detail" asp-route-id="@blog.Id">read more</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="single-blog">
-                    <div class="blog-img">
-                        <a href="blog-details.html"><img src="img/blog/blog2.jpg" alt="blog"></a>
-                        <div class="blog-hover">
-                            <a href="blog-details.html"><i class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-top">
-                            <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
-                        </div>
-                        <div class="blog-bottom">
-                            <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                            <a href="blog-details.html">read more</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 hidden-sm col-xs-12">
-                <div class="single-blog">
-                    <div class="blog-img">
-                        <a href="blog-details.html"><img src="img/blog/blog3.jpg" alt="blog"></a>
-                        <div class="blog-hover">
-                            <a href="blog-details.html"><i class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                    <div class="blog-content">
-                        <div class="blog-top">
-                            <p>By Alex  /  June 20, 2017  /  <i class="fa fa-comments-o"></i> 4</p>
-                        </div>
-                        <div class="blog-bottom">
-                            <h2><a href="blog-details.html">I must explain to you how all this a mistaken idea </a></h2>
-                            <a href="blog-details.html">read more</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </div>
