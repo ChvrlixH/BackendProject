@@ -35,7 +35,7 @@
                             <div class="blog-details-content">
                             <h2>@blogItem.Title </h2>
                             <h6>@blogItem.Name  /  @blogItem.Date  /  <i class="fa fa-comments-o"></i> @blogItem.Comment</h6>
-                              @blogItem.Description
+                              @Html.Raw(blogItem.Description)
                             </div>
                         </div>
                         }

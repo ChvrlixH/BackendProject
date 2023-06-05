@@ -18,6 +18,7 @@ public class AppDb : IdentityDbContext<AppUser>
 	public DbSet<Event> Events { get; set; } = null!;
 	public DbSet<Speaker> Speakers { get; set; } = null!;
 	public DbSet<EventSpeaker> EventSpeakers { get; set; } = null!;
+	public DbSet<Subscribe> Subscribes { get; set; } = null!;
 	//protected override void OnModelCreating(ModelBuilder modelBuilder)
 	//{
 	//	modelBuilder.Entity<EventSpeaker>().HasKey(es => new { es.EventId, es.SpeakerId });

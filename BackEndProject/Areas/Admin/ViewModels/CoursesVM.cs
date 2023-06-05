@@ -15,7 +15,7 @@ namespace BackEndProject.Areas.Admin.ViewModels
         public string Image { get; set; }
         [Required, StringLength(85, MinimumLength = 5)]
         public string Title { get; set; }
-        [Required, StringLength(750, MinimumLength = 20)]
+        [Required, StringLength(850, MinimumLength =10)]
         public string Description { get; set; }
         [Required]
         public DateTime Starts { get; set; }

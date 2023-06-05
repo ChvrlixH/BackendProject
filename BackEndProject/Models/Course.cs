@@ -10,7 +10,7 @@ namespace BackEndProject.Models
         public string Image { get; set; } = null!;
         [Required, StringLength(85, MinimumLength = 5)]
         public string Title { get; set; } = null!;
-        [Required, StringLength(750, MinimumLength = 20)] 
+        [Required] 
         public string Description { get; set; } = null!;
         [Required]
         public DateTime Starts { get; set; }

@@ -131,7 +131,7 @@ namespace BackEndProject.Areas.Admin.Controllers
 		[Authorize(Roles = "Admin,Moderator")]
 		public IActionResult Update(int id)
 		{
-			Blog? blog = _appDb.Blogs.FirstOrDefault(c => c.Id == id);
+            Blog? blog = _appDb.Blogs.FirstOrDefault(c => c.Id == id);
 
 			if (blog is null) { return NotFound(); }
 
@@ -143,7 +143,8 @@ namespace BackEndProject.Areas.Admin.Controllers
 		[Authorize(Roles = "Admin,Moderator")]
 		public IActionResult Update(Blog blog, int id)
 		{
-			Blog? dBblog = _appDb.Blogs.AsNoTracking().FirstOrDefault(c => c.Id == id);
+
+            Blog? dBblog = _appDb.Blogs.AsNoTracking().FirstOrDefault(c => c.Id == id);
 
 			if (blog is null) { return NotFound(); }
 

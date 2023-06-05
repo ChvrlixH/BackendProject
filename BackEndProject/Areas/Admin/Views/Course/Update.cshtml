@@ -1,5 +1,5 @@
 ﻿@using BackEndProject.Areas.Admin.ViewModels;
-@model CoursesVM;
+@model CoursesVM
 @{
     ViewData["Title"] = "Update";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -14,7 +14,10 @@
                     <p class="card-description">
                         Course Update
                     </p>
-                    <form class="forms-sample" method="post">
+                    <h4 class="card-title" style="margin-top:40px">Current Event Photo</h4>
+                    <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+                    <img src="~/admin/images/faces/@Model.Course.Image" width="100" alt="Alternate Photo" />
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="Photo">Photo</label>
                             <input class="form-control" asp-for="Photo" placeholder="Photo">
@@ -22,52 +25,52 @@
                         </div>
                         <div class="form-group">
                             <label for="Title">Title</label>
-                            <input class="form-control" asp-for="Title" placeholder="Title">
+                            <input class="form-control" value="@Model.Course.Title" asp-for="Title" placeholder="Title">
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="Description">Description</label>
-                            <input class="form-control" id="courseeditorId" asp-for="Description" placeholder="Description">
+                            <textarea class="form-control" value="@Model.Course.Description" id="courseeditorId" asp-for="Description" placeholder="Description"></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="Starts">Starts</label>
-                            <input class="form-control" asp-for="Starts" placeholder="Starts">
+                            <input class="form-control" value="@Model.Course.Starts" asp-for="Starts" placeholder="Starts">
                             <span asp-validation-for="Starts" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="Duration">Duration</label>
-                            <input class="form-control" asp-for="Duration" placeholder="Duration">
+                            <input class="form-control" value="@Model.Course.Duration" asp-for="Duration" placeholder="Duration">
                             <span asp-validation-for="Duration" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="ClassDuration">ClassDuration</label>
-                            <input class="form-control" asp-for="ClassDuration" placeholder="ClassDuration">
+                            <input class="form-control" value="@Model.Course.ClassDuration" asp-for="ClassDuration" placeholder="ClassDuration">
                             <span asp-validation-for="ClassDuration" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="SkillLevel">SkillLevel</label>
-                            <input class="form-control" asp-for="SkillLevel" placeholder="SkillLevel">
+                            <input class="form-control" value="@Model.Course.SkillLevel" asp-for="SkillLevel" placeholder="SkillLevel">
                             <span asp-validation-for="SkillLevel" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="Language">Language</label>
-                            <input class="form-control" asp-for="Language" placeholder="Language">
+                            <input class="form-control" value="@Model.Course.Language" asp-for="Language" placeholder="Language">
                             <span asp-validation-for="Language" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="Students">Students</label>
-                            <input class="form-control" asp-for="Students" placeholder="Students">
+                            <input class="form-control" value="@Model.Course.Students" asp-for="Students" placeholder="Students">
                             <span asp-validation-for="Students" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="Assesments">Assesments</label>
-                            <input class="form-control" asp-for="Assesments" placeholder="Assesments">
+                            <input class="form-control" value="@Model.Course.Assesments" asp-for="Assesments" placeholder="Assesments">
                             <span asp-validation-for="Assesments" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="Fee">Fee</label>
-                            <input class="form-control" asp-for="Fee" placeholder="Fee">
+                            <input class="form-control" value="@Model.Course.Fee" asp-for="Fee" placeholder="Fee">
                             <span asp-validation-for="Fee" class="text-danger"></span>
                         </div>
                         <div class="mt-3">
@@ -75,7 +78,14 @@
                             <select class="js-example-basic-multiple" id="selectCategory" name="states" multiple="multiple" style="width:100%">
                                 @foreach(Category category in Model.Categories)
                                 {
-                                    <option value="@category.Id">@category.Name</option>
+                                    if(Model.CourseCategories.FirstOrDefault(c=>c.CategoryId==category.Id) !=null)
+                                    {
+                                        <option selected value="@category.Id">@category.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
                                 }
                             </select>
                         </div>

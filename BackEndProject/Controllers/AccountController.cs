@@ -203,7 +203,7 @@ namespace BackEndProject.Controllers
 
         public async Task<string> GetEmailTemplateAsync(string url)
         {
-            string folder = @"templates\images\";
+            string folder = @"admin\templates\images\";
             string path = Path.Combine(_webHostEnvironment.WebRootPath, folder + "\\", "template.html");
 
             using StreamReader streamReader = new StreamReader(path);

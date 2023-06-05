@@ -32,7 +32,7 @@ namespace BackEndProject.Areas.Admin.Controllers
 
         [Authorize(Roles = "Admin,Moderator")]
         public IActionResult Create()
-        {
+        { 
             CoursesVM coursesVM = new CoursesVM
             {
                 Categories = _appDb.Categories.ToList()
@@ -48,7 +48,7 @@ namespace BackEndProject.Areas.Admin.Controllers
             CoursesVM coursesVM = new CoursesVM
             {
                 Categories = _appDb.Categories.ToList()
-            };
+            }; 
 
             if (!_courses.Photo.CheckFileSize(1500))
             {
@@ -103,6 +103,7 @@ namespace BackEndProject.Areas.Admin.Controllers
                     CategoryId = cId
                 });
             }
+
             newCourse.Categories= courseCategory1;
             await _appDb.Courses.AddAsync(newCourse);
             await _appDb.SaveChangesAsync();
@@ -150,10 +151,10 @@ namespace BackEndProject.Areas.Admin.Controllers
             }
 
         [Authorize(Roles = "Admin,Moderator")]
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Update(int? id)
             {
             if (id == null) { return NotFound(); }
-            Course? course = await _appDb.Courses.Include(c=>c.Categories).FirstOrDefaultAsync(c => c.Id == id);
+            Course course = await _appDb.Courses.Include(c=>c.Categories).FirstOrDefaultAsync(c => c.Id == id);
             IList<CourseCategory> courseCategories = _appDb.CoursesCategories.Include(c => c.Category).Where(c => c.CourseId == course.Id).ToList();
             if (course is null) { return NotFound(); }
 
@@ -171,12 +172,12 @@ namespace BackEndProject.Areas.Admin.Controllers
             [HttpPost]
             [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Moderator")]
-        public async Task<IActionResult> Update(CoursesVM editedCourse, int id)
+        public async Task<IActionResult> Update(int? id, CoursesVM editedCourse)
             {
-            Course? course = await _appDb.Courses.Include(c => c.Categories).FirstOrDefaultAsync(c => c.Id == id);
+            Course course = await _appDb.Courses.Include(c => c.Categories).FirstOrDefaultAsync(c => c.Id == id);
             IList<CourseCategory> courseCategories = _appDb.CoursesCategories.Include(c => c.Category).Where(c => c.CourseId == course.Id).ToList();
 
-            CoursesVM coursesVM = new()
+            CoursesVM coursesVM = new CoursesVM
             {
                 Course = course,
                 Categories = _appDb.Categories.ToList(),
@@ -188,6 +189,7 @@ namespace BackEndProject.Areas.Admin.Controllers
                 ModelState.AddModelError("Image", "Faylin tipi image olmalidir.");
                 return View(coursesVM);
             }
+
             if (!editedCourse.Photo.CheckFileSize(1500))
             {
                 ModelState.AddModelError("Image", "Faylin hecmi 1.5 mb-dan kicik olmalidir.");

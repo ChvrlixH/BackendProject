@@ -168,8 +168,7 @@ namespace BackEndProject.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
@@ -197,8 +196,8 @@ namespace BackEndProject.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasMaxLength(85)
+                        .HasColumnType("nvarchar(85)");
 
                     b.HasKey("Id");
 

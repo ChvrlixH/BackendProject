@@ -38,7 +38,24 @@ namespace BackEndProject.Controllers
                 Course = _course,
                 CourseCategories = courseCategories
             };
+            ViewBag.Categories=await _appDb.Categories.ToListAsync();
 
+            return View(courseVM);
+        }
+        public async Task<IActionResult> FilterCourse(int id)
+        {
+            Category? category=await _appDb.Categories.Include(c=>c.Courses).FirstOrDefaultAsync(x=>x.Id == id);
+            if(category == null) { return NotFound();}
+            List<Course> courses = new List<Course>();
+            foreach (CourseCategory courseCategory in category.Courses)
+            {
+                Course course = await _appDb.Courses.FirstOrDefaultAsync(x => x.Id == courseCategory.CourseId);
+                courses.Add(course);
+            }
+            CoursesVM courseVM = new()
+            {
+                Courses = courses
+            };
             return View(courseVM);
         }
     }

@@ -65,10 +65,10 @@
                     </div>
                     <div class="single-blog-widget mb-50">
                         <h3>categories</h3>
-                        @foreach(CourseCategory courseCategory in Model.CourseCategories)
+                        @foreach(Category category in ViewBag.Categories)
                         {
                         <ul>
-                                <li><a>@courseCategory.Category.Name</a></li>
+                                <li><a  asp-action="FilterCourse" asp-route-id="@category.Id">@category.Name</a></li>
 
                         </ul>
                         }

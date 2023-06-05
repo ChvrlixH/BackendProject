@@ -16,7 +16,7 @@
                     </p>
                     <h4 class="card-title" style="margin-top:40px">Current Event Photo</h4>
                     <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
-                    <img src="~/admin/images/faces/@Model.Image" width="100" alt="Alternate Photo" />
+                    <img src="~/admin/images/faces/@Model.Event.Image" width="100" alt="Alternate Photo" />
                     <form class="forms-sample" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="Photo">Photo</label>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group">
                             <label for="Description">Description</label>
-                            <input class="form-control" value="@Model.Event.Description" asp-for="Description" id="eventeditorId" placeholder="Description">
+                            <textarea class="form-control" value="@Model.Event.Description" asp-for="Description" id="eventeditorId" placeholder="Description"></textarea>
                             <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                         <div class="form-group">

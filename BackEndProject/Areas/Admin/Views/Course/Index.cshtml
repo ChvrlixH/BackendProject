@@ -29,7 +29,7 @@
                                             <img style="width:60px; height:60px;" src="~/admin/images/faces/@coursesItem.Image" />
                                         </td>
                                         <td style="max-width:200px">@coursesItem.Title</td>
-                                        <td style="max-width:300px">@coursesItem.Description</td>
+                                        <td style="max-width:300px">@Html.Raw(coursesItem.Description)</td>
                                         <td>
                                             <a class="btn btn-success" asp-action="Read" asp-route-id="@coursesItem.Id">Read</a>
                                             <a class="btn btn-warning" asp-action="Update" asp-route-id="@coursesItem.Id">Update</a>

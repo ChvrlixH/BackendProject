@@ -42,7 +42,7 @@
                         <div class="single-course">
                             <div class="course-img">
                             <a asp-controller="Courses" asp-action="Detail" asp-route-id="@course.Id">
-                                <img src="~/admin/images/faces/@course.Image" alt="course">
+                                <img style="width:370px; height:245px;" src="~/admin/images/faces/@course.Image" alt="course">
                                     <div class="course-hover">
                                         <i class="fa fa-link"></i>
                                     </div>
@@ -53,12 +53,12 @@
                                 @if(course.Description.Length >= 130)
                                 {
                             <p>
-                                @course.Description.Substring(0,130)...
+                                @Html.Raw(course.Description.Substring(0,130))...
                                 </p>
                             }
                             else
                             {
-                                @course.Description
+                                @Html.Raw(course.Description)
                             }
                             <a class="default-btn" asp-controller="Courses" asp-action="Detail" asp-route-id="@course.Id">read more</a>
                             </div>   

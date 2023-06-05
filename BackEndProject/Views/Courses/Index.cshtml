@@ -56,12 +56,12 @@
                             @if (course.Description.Length >= 130)
                             {
                                 <p>
-                                    @course.Description.Substring(0,130)...
+                                    @Html.Raw(course.Description.Substring(0,130))...
                                 </p>
                             }
                             else
                             {
-                                @course.Description
+                                @Html.Raw(course.Description)
                             }
                             <a class="default-btn" asp-controller="Courses" asp-action="Detail" asp-route-id="@course.Id">read more</a>
                     </div>

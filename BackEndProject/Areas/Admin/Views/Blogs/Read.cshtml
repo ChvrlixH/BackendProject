@@ -14,7 +14,7 @@
             <h4> <span style="color:red">Date:</span> @Model.Date</h4>
             <h4> <span style="color:red">Comment:</span> @Model.Comment</h4>
             <h4> <span style="color:red">Title:</span> @Model.Title</h4>
-            <h4> <span style="color:red">Description:</span> @Model.Description</h4>
+            <h4> <span style="color:red">Description:</span> @Html.Raw(Model.Description)</h4>
             <h4> <span style="color:red">Image:</span> @Model.Image</h4>
 
             <a class="btn btn-info" asp-action="Index" style="margin-top:30px">Go Back</a>
