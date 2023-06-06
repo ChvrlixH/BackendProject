@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Net.Mime;
+using System.Security.Policy;
 using ContentType = BackEndProject.Utils.Enums.ContentType;
 
 namespace BackEndProject.Areas.Admin.Controllers
@@ -86,6 +87,30 @@ namespace BackEndProject.Areas.Admin.Controllers
                     return View();
                 }
             }
+            foreach (Subscribe subscribe in _appDb.Subscribes.ToList())
+            {
+                EmailHelper emailHelper = new EmailHelper();
+
+                string body =$"<h2>{newCourse.Title}</h2>" +
+                    $"<h2>{newCourse.Description}</h2>" +
+                    $"<h2>{newCourse.Starts}</h2>" +
+                    $"<h2>{newCourse.Duration}</h2>" +
+                    $"<h2>{newCourse.ClassDuration}</h2>" +
+                    $"<h2>{newCourse.SkillLevel}</h2>" +
+                    $"<h2>{newCourse.Language}</h2>" +
+                    $"<h2>{newCourse.Students}</h2>" +
+                    $"<h2>{newCourse.Assesments}</h2>" +
+                    $"<h2>{newCourse.Fee}</h2>";
+
+                MailRequestVM mailRequestVM = new()
+                {
+                    ToEmail = subscribe.Email,
+                    Subject = "Course info",
+                    Body = body
+                };
+
+                await emailHelper.SendEmailAsync(mailRequestVM);
+            }   
 
             List<CourseCategory> courseCategory1 = new List<CourseCategory>();
             string categories = Request.Form["states"];

@@ -395,6 +395,23 @@ namespace BackEndProject.Migrations
                     b.ToTable("Speakers");
                 });
 
+            modelBuilder.Entity("BackEndProject.Models.Subscribe", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subscribes");
+                });
+
             modelBuilder.Entity("BackEndProject.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")

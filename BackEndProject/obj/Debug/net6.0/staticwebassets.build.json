@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0iTWnKtU2aqpwWi34the6ShD5NJ+kcr9gko0uii6IqY=",
+  "Hash": "VBAnlY5Mrz1w5s+yYurtbyiTsNkErU1TqErAdtSB8ZY=",
   "Source": "BackEndProject",
   "BasePath": "_content/BackEndProject",
   "Mode": "Default",
@@ -1188,6 +1188,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\admin\\images\\faces\\7bd33785-dcbd-4673-85c6-ca18fe9cec0cLaura_Berlin (1).jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\images\\faces\\7c770713-dc5c-455c-868b-57b259bc3a27Maxe_Telim.jpg",
+      "SourceId": "BackEndProject",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\",
+      "BasePath": "_content/BackEndProject",
+      "RelativePath": "admin/images/faces/7c770713-dc5c-455c-868b-57b259bc3a27Maxe_Telim.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\admin\\images\\faces\\7c770713-dc5c-455c-868b-57b259bc3a27Maxe_Telim.jpg"
     },
     {
       "Identity": "C:\\Users\\Asus\\source\\repos\\BackEndProject\\BackEndProject\\wwwroot\\admin\\images\\faces\\82059a8e-0a30-445c-a586-e6deb3683268La Esmeralda (1944).jfif",

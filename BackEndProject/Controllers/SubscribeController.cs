@@ -17,10 +17,16 @@ namespace BackEndProject.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Subscribe(string Email)
+		public IActionResult Create(string Email)
 		{
+			Subscribe subscribe = new Subscribe
+			{
+				Email=Email
+			};
 
-			return View();
+			_appDb.Subscribes.AddAsync(subscribe);
+			_appDb.SaveChanges();
+			return RedirectToAction("Index", "Home");
 		}
 	}
 }
